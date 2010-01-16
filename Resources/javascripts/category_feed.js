@@ -1,4 +1,3 @@
-var xhr = Titanium.Network.createHTTPClient();
 var tableView;
 var data = [];
 var template = {
@@ -11,48 +10,22 @@ function buildData(post, index) {
 	data.push({title:item.title});
 }
 
+function displayCategories(categories) {
+    var win;
+    tableView = Titanium.UI.createTableView({
+        template:template, 
+        data:data
+        }, function(eventObject) {
+            win = Titanium.UI.createWindow({url:'/category_feed.html', title:eventObject.rowData.title});
+            win.open({animated:true});
+        });
+    Titanium.UI.currentWindow.addView(tableView);
+    Titanium.UI.currentWindow.showView(tableView);
+}
+
+
 function retrieveCategories() {
-  data.push({title: 'I need some supplies', hasChild:true});
-  // Titanium.API.info(requestUrl);
-  //   xhr.open('GET',requestUrl);
-  //   xhr.onreadystatechange = function() {
-  //  try {
-  //      if (this.readyState == 4) {   
-  //      if (this.status == 200) {
-  //        try {
-  //          var results = eval('('+this.responseText+')');
-  //          for(var index in results) {
-  //            buildData(results[index], index);
-  //          }
-  //          if(tableView == null) {
-							var win;
-							tableView = Titanium.UI.createTableView({
-								template:template, 
-								data:data
-								}, function(eventObject) {
-                  win = Titanium.UI.createWindow({url:'/category_feed.html', title:eventObject.rowData.title});
-                  win.open({animated:true});
-								});
-							Titanium.UI.currentWindow.addView(tableView);
-							Titanium.UI.currentWindow.showView(tableView);
-  //          }           
-  //          activityIndicator.hide();
-  //          Titanium.UI.currentWindow.repaint();
-  //        } catch(ex) {
-  //          Titanium.API.error(ex);
-  //          var alert = Titanium.UI.createAlertDialog();
-  //          alert.setMessage('There was a problem retrieving this list of wants.  Please try again later.');
-  //          alert.show();
-  //        }     
-  //      } else {
-  //        activityIndicator.hide();
-  //      }
-  //    }   
-  //  } catch(excep) {
-  //    activityIndicator.hide();
-  //  }
-  //   };
-  // xhr.send();
+    Item.categories(displayCategories);
 }
 
 window.onload = function(){
