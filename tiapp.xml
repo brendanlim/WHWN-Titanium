@@ -8,11 +8,11 @@
 <statusbar-style>opaque</statusbar-style>
 <windows>
   <window>
-    <id>initial</id>
-    <url>index.html</url>
-    <title>Home</title>
+    <id>wants</id>
+    <url>wants.html</url>
+    <title>Wants</title>
     <backgroundColor>#fff</backgroundColor>
-	  <icon>images/icon_home.png</icon>
+	  <icon>images/icon_want.png</icon>
     <barColor>#4b5d74</barColor>
 		<fullscreen>false</fullscreen>
   </window>
