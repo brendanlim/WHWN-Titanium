@@ -63,7 +63,7 @@ Item = {
     
     categories: function(callback) {
         return Item.get("/categories", {}, callback);
-    }
+    },
 
     url: function(path, args) {
         var queryString = $.param(args, true);
