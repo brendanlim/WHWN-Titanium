@@ -3,6 +3,10 @@ ItemDisplay = {
         alert(results);
     },
     
+    categoryList: function(results) {
+    
+    },
+    
     postCreated: function(results) {
         alert(results);
     },
