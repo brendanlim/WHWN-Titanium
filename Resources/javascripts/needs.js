@@ -24,7 +24,6 @@ function displayNeeds(needs) {
     Titanium.UI.currentWindow.showView(tableView);
 }
 
-
 function retrieveNeeds() {
     Item.needs(displayNeeds);
 }
