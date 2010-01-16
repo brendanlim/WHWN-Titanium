@@ -2,6 +2,10 @@ ItemDisplay = {
     showList: function(results) {
         alert(results);
     },
+    
+    postCreated: function(results) {
+        alert(results);
+    },
 
     displayError: function(ex) {
         Titanium.API.error(ex);
