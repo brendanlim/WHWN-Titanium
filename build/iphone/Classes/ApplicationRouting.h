@@ -15,8 +15,10 @@
 @interface ApplicationRouting : NSObject<TitaniumAppAssetResolver> {
 }
 - (NSData*) resolveAppAsset:(NSURL*)url;
+- (NSData*) pageNamedCategory_feed;
 - (NSData*) pageNamedSettings;
 - (NSData*) pageNamedWants;
+- (NSData*) scriptNamedJavascripts_category_feed;
 - (NSData*) scriptNamedJavascripts_jquery_1_4;
 - (NSData*) scriptNamedJavascripts_settings;
 - (NSData*) scriptNamedJavascripts_wants;

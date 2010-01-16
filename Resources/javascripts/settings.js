@@ -1,5 +1,4 @@
 window.onload = function() {
-  Titanium.UI.currentWindow.setTitleImage('/images/personify_logo_nav.png');
 	var height = (Titanium.Platform.name.indexOf('iPhone') != -1) ? 30: 40;
 	var usernameField = Titanium.UI.createTextField({
 		id:'usernameField',
