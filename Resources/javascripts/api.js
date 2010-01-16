@@ -17,7 +17,7 @@
     created_at - timestamp
 
     // example calls
-    item = new Item({
+    Item.create({
         title: 'Example Title',
         type: 'Type',
         content: 'Content',
@@ -26,48 +26,51 @@
         datetime_start: '11-25-2010 11:00:45 +0200',
         contact_name: 'Gabriel'
     });
-    item.create();
 */
 
-Item = function(fields, format) {
-    if (!fields) fields = {};
-    if (!format) format = "json";
+/*** Debug helpers for testing in-browser ***/
+// ENDPOINT_DOMAIN = "http://example.com"
+// ItemDisplay.request = function(method, url) {
+//     alert("Would be doing a " + method + " with url: " + url);
+// };
+
+
+Item = {
+    format: "json",
     
-    this.endpoint = "http://localhost";
-    this.format = format;
-    this.fields = fields;
+    create: function(fields) {
+        if (!fields) fields = {};
+        return Item.post("/post", fields, ItemDisplay.postCreated);
+    },
     
+    haves: function() {return this.type("haves");},
+    needs: function() {return this.type("needs");},
     
-    this.create = function() {
-        return this.post("/post", this.fields, ItemDisplay.postCreated);
-    };
-    
-    this.fetchType = function(type) {
+    type: function(type) {
         if (type != "haves" && type != "needs")
             return null;
-        return this.get("/" + type, {}, ItemDisplay.showList);
-    };
-    
-    this.fetchCategory = function(category, type) {
+        return Item.get("/" + type, {}, ItemDisplay.showList);
+    },
+
+    category: function(category, type) {
         var typePath = "";
         if (type) typePath = "/" + type;
         
-        return this.get("/" + category + typePath, {}, ItemDisplay.showList);
-    };
-    
-    this.url = function(path, args) {
-        return this.endpoint + path + "." + this.format + "?" + $.param(args, true);
-    };
-    
-    this.get = function(path, args, displayCallback) {
-        return ItemDisplay.request('GET', this.url(path, args), format, displayCallback);
-    };
+        return Item.get("/" + category + typePath, {}, ItemDisplay.showList);
+    },
 
-    this.post = function(path, args, displayCallback) {
-        return ItemDisplay.request('POST', this.url(path, args), format, displayCallback);
-    };
+    url: function(path, args) {
+        var queryString = $.param(args, true);
+        if (queryString) queryString = "?" + queryString;
+        
+        return ENDPOINT_DOMAIN + path + "." + this.format + queryString;
+    },
+
+    get: function(path, args, displayCallback) {
+        return ItemDisplay.request('GET', this.url(path, args), this.format, displayCallback);
+    },
+
+    post: function(path, args, displayCallback) {
+        return ItemDisplay.request('POST', this.url(path, args), this.format, displayCallback);
+    }
 }
-
-ItemDisplay.request = function(method, url) {
-    alert("Would be doing a " + method + " with url: " + url);
-};
