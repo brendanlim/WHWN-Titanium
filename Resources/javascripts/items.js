@@ -13,6 +13,10 @@ ItemDisplay = {
         alert.setMessage('There was a problem retrieving this list of wants.  Please try again later.');
         alert.show();      
     },
+    
+    httpError: function(status) {
+        alert(status + ": request failed");
+    }
 
     request: function(method, url, callback) {
         if (!method) method = "GET";
@@ -30,6 +34,8 @@ ItemDisplay = {
                             displayError(ex);
                         }
                     } else {
+                        httpError(this.status);
+                        
                         activityIndicator.hide();
                     }
                 }   
