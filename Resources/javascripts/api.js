@@ -16,7 +16,7 @@
     priority - integer
     created_at - timestamp
 
-    // example calls
+    // the displayCallback function will be passed the fetched and parsed JSON object
     Item.create({
         title: 'Example Title',
         type: 'Type',
@@ -25,7 +25,16 @@
         location: 'Northwest Port-Au-Prince',
         datetime_start: '11-25-2010 11:00:45 +0200',
         contact_name: 'Gabriel'
-    });
+    }, displayCallback);
+    
+    Item.haves(displayCallback); 
+    Item.needs(displayCallback);
+    Item.type("haves", displayCallback);
+    Item.type("needs", displayCallback);
+    
+    Item.categories(displayCallback);
+    Item.category("transport", displayCallback);
+    
 */
 
 /*** Debug helpers for testing in-browser ***/
@@ -37,29 +46,29 @@
 Item = {
     format: "json",
     
-    create: function(fields) {
+    create: function(fields, callback) {
         if (!fields) fields = {};
-        return Item.post("/post", fields, ItemDisplay.postCreated);
+        return Item.post("/post", fields, callback);
     },
     
-    haves: function() {return this.type("haves");},
-    needs: function() {return this.type("needs");},
+    haves: function(callback) {return this.type("haves", callback);},
+    needs: function(callback) {return this.type("needs", callback);},
     
-    type: function(type) {
+    type: function(type, callback) {
         if (type != "haves" && type != "needs")
             return null;
-        return Item.get("/" + type, {}, ItemDisplay.showList);
+        return Item.get("/" + type, {}, callback);
     },
 
-    category: function(category, type) {
+    category: function(category, type, callback) {
         var typePath = "";
         if (type) typePath = "/" + type;
         
-        return Item.get("/" + category + typePath, {}, ItemDisplay.showList);
+        return Item.get("/" + category + typePath, {}, callback);
     },
     
-    categories: function() {
-        return Item.get("/categories", {}, ItemDisplay.categoryList);
+    categories: function(callback) {
+        return Item.get("/categories", {}, callback);
     }
 
     url: function(path, args) {
@@ -69,21 +78,39 @@ Item = {
         return ENDPOINT_DOMAIN + path + "." + this.format + queryString;
     },
 
-    get: function(path, args, displayCallback) {
-        return ItemDisplay.request('GET', this.url(path, args), this.format, displayCallback);
+    get: function(path, args, callback) {
+        return this.request('GET', this.url(path, args), this.format, callback);
     },
 
-    post: function(path, args, displayCallback) {
-        return ItemDisplay.request('POST', this.url(path, args), this.format, displayCallback);
+    post: function(path, args, callback) {
+        return this.request('POST', this.url(path, args), this.format, callback);
+    },
+    
+    request: function(method, url, callback) {
+        if (!method) method = "GET";
+        var xhr = Titanium.Network.createHTTPClient();
+        xhr.open(method, url);
+        
+        xhr.onreadystatechange = function() {
+            try {
+                if (this.readyState == 4) {   
+                    if (this.status == 200) {
+                        try {
+                            var results = eval('('+this.responseText+')');
+                            callback(results);
+                        } catch(ex) {
+                            ItemDisplay.displayError(ex);
+                        }
+                    } else {
+                        ItemDisplay.httpError(this.status);
+                        
+                        activityIndicator.hide();
+                    }
+                }   
+            } catch(excep) {
+                activityIndicator.hide();
+            }
+            xhr.send(); 
+        }
     }
 }
-/*
-Item.prototype = function(fields) {
-    this.fields = fields;
-};
-
-$.extend(Item.prototype, {
-    getField: function(field) {
-        alert(fields[field]);
-    },
-});*/
