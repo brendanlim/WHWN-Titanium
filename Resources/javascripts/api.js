@@ -1,39 +1,63 @@
-function get(args, emitter_format) {
-    response = this.request('GET', url, args);
-    return(response);
-}
-
-function post(args, emitter_format) {
-    response = this.request('POST', url, args);
-    return(response);
-}
-
-function request(method='GET', url, args, emitter_format) {
-    var xhr = Titanium.Network.createHTTPClient();
-    xhr.open(method, url);
-}
-
-Item = function(args) {
-    this.created_at = args.created_at;
-    this.title = args.title;
-    this.type = args.type;
-    this.location = args.location;
-    this.geostamp = args.geostamp;
-    this.datetime_start = args.datetime_start;
-    this.datetime_end = args.datetime_end;
-    this.category = args.category;
-    this.contact_name = args.contact_name;
-    this.contact_email = args.contact_email;
-    this.contact_phone = args.contact_phone;
-    this.contact_id = args.contact_id;
-    this.content = args.content;
-    this.priority = args.priority;
+/* fields:
     
-    this.get = get;
-    this.post = post;
-    this.request = request;
-}
+    * - Required to create
+    
+    title - string (*)
+    type - string (*)
+    content = string (*)
+    category - string (*)
+    location - string (text) (*)
+    geostamp - string (coords)
+    datetime_start - timestamp (*)
+    datetime_end - timestamp
+    contact_name - string (*)
+    contact_phone - string
+    contact_id - integer
+    priority - integer
+    created_at - timestamp
 
-//example calls
-this_post = new Item(title='ddlabjslfd');
-this_post.post();
+    // example calls
+    item = new Item({
+        title: 'Example Title',
+        type: 'Type',
+        content: 'Content',
+        category: 'Transportation'.
+        location: 'Northwest Port-Au-Prince',
+        datetime_start: '11-25-2010 11:00:45 +0200',
+        contact_name: 'Gabriel'
+    });
+    item.create();
+*/
+
+Item = function(fields, format) {
+    if (!format) format = "json";
+    
+    this.endpoint = "http://localhost";
+    this.format = format;
+    this.fields = fields;
+    
+    
+    this.create = function() {
+        return this.post("/post");
+    }
+    
+    this.url = function(path) {
+        return this.endpoint + path + "?test";
+    }
+    
+    this.get = function(path) {
+        response = this.request('GET', this.url(path), format);
+        return(response);
+    }
+
+    this.post = function(path) {
+        return this.request('POST', this.url(path), format);
+    }
+
+    this.request = function(method, url) {
+        if (!method) method = "GET";
+        alert("Would be doing a " + method + " with url: " + url);
+//         var xhr = Titanium.Network.createHTTPClient();
+//         xhr.open(method, url);
+    }
+}
