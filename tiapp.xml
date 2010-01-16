@@ -8,9 +8,9 @@
 <statusbar-style>opaque</statusbar-style>
 <windows>
   <window>
-    <id>wants</id>
-    <url>wants.html</url>
-    <title>Wants</title>
+    <id>needs</id>
+    <url>needs.html</url>
+    <title>Needs</title>
     <backgroundColor>#fff</backgroundColor>
 	  <icon>images/icon_want.png</icon>
     <barColor>#4b5d74</barColor>
