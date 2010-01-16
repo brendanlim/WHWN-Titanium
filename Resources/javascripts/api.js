@@ -29,10 +29,10 @@
 */
 
 /*** Debug helpers for testing in-browser ***/
-ENDPOINT_DOMAIN = "http://eleventy6.com:8000"
-ItemDisplay.request = function(method, url) {
-    alert("Would be doing a " + method + " to url: " + url);
-};
+// ENDPOINT_DOMAIN = "http://eleventy6.com:8000"
+// ItemDisplay.request = function(method, url) {
+//     alert("Would be doing a " + method + " to url: " + url);
+// };
 
 Item = {
     format: "json",
@@ -77,7 +77,7 @@ Item = {
         return ItemDisplay.request('POST', this.url(path, args), this.format, displayCallback);
     }
 }
-
+/*
 Item.prototype = function(fields) {
     this.fields = fields;
 };
@@ -86,4 +86,4 @@ $.extend(Item.prototype, {
     getField: function(field) {
         alert(fields[field]);
     },
-});
+});*/
