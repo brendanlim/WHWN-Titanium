@@ -53,40 +53,33 @@ Item = function(fields, format) {
     this.post = function(path) {
         return this.request('POST', this.url(path), format);
     }
+    
+    this.showList(results) {
+        alert(results);
+    }
+    
+    this.displayError(ex) {
+        Titanium.API.error(ex);
+        var alert = Titanium.UI.createAlertDialog();
+        alert.setMessage('There was a problem retrieving this list of wants.  Please try again later.');
+        alert.show();      
+    }
 
-    this.request = function(method, url) {
+    this.request = function(method, url, callback) {
         if (!method) method = "GET";
         alert("Would be doing a " + method + " with url: " + url);
         var xhr = Titanium.Network.createHTTPClient();
         xhr.open(method, url);
+        
         xhr.onreadystatechange = function() {
         try {
             if (this.readyState == 4) {   
                 if (this.status == 200) {
                     try {
                         var results = eval('('+this.responseText+')');
-                        for(var index in results) {
-                            buildData(results[index], index);
-                        }
-                        if(tableView == null) {
-                            var win;
-                            tableView = Titanium.UI.createTableView({
-                                template:template, 
-                                data:data
-                            }, function(eventObject) {
-                                win = Titanium.UI.createWindow({url:'/category_feed.html', title:eventObject.rowData.title});
-                                win.open({animated:true});
-      						});
-						Titanium.UI.currentWindow.addView(tableView);
-						Titanium.UI.currentWindow.showView(tableView);
-                        }           
-                        activityIndicator.hide();
-                        Titanium.UI.currentWindow.repaint();
+                        callback(results);
                     } catch(ex) {
-                        Titanium.API.error(ex);
-                        var alert = Titanium.UI.createAlertDialog();
-                        alert.setMessage('There was a problem retrieving this list of wants.  Please try again later.');
-                        alert.show();
+                        displayError(ex);
                     }
                 } else {
                     activityIndicator.hide();
@@ -95,6 +88,6 @@ Item = function(fields, format) {
         } catch(excep) {
             activityIndicator.hide();
         }
+        xhr.send(); 
     };
-    xhr.send();
-    }
+}
