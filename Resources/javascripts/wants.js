@@ -47,7 +47,7 @@ function retrieveResults() {
 								template:template, 
 								data:data
 								}, function(eventObject) {
-                  // win = Titanium.UI.createWindow({url:'/detail.html',titleImage:'/images/personify_logo_nav.png',backgroundImage:'/images/stripes.png'});
+                  // win = Titanium.UI.createWindow({url:'/detail.html'});
                   // win.open({animated:true});
 								});
 							Titanium.UI.currentWindow.addView(tableView);
