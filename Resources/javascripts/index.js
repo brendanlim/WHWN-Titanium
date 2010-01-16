@@ -1,13 +1,11 @@
-window.onload = function()
-{
-	document.getElementById('version').innerHTML = Titanium.version;
-	document.getElementById('phone').innerHTML = Titanium.Platform.name + ' '+Titanium.Platform.version;
-	document.getElementById('b').onclick = function() { Titanium.Media.vibrate(); };
+var tabs = Titanium.UI.getTabs();
 
-	Titanium.Gesture.addEventListener('shake',function(){
-		var alerty = Titanium.UI.createAlertDialog();
-		alerty.setTitle("Not stirred!");
-		alerty.show();
-	},false);
-	
+window.onload = function() {
+  Titanium.UI.currentWindow.addEventListener('focused',function(e) {
+		setTimeout(function() {
+			if((Titanium.App.Properties.getString("username") == null || Titanium.App.Properties.getString("password") == null)) {
+    		Titanium.UI.setActiveTab(tabs[1]);
+			}
+		},400);
+	});
 };
