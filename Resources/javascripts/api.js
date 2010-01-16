@@ -99,10 +99,10 @@ Item = {
                             var results = eval('('+this.responseText+')');
                             callback(results);
                         } catch(ex) {
-                            ItemDisplay.displayError(ex);
+                            this.displayError(ex);
                         }
                     } else {
-                        ItemDisplay.httpError(this.status);
+                        this.httpError(this.status);
                         
                         activityIndicator.hide();
                     }
@@ -112,18 +112,13 @@ Item = {
             }
             xhr.send(); 
         }
-    }
-}
-
-ItemDisplay = {
+    },
+    
     displayError: function(ex) {
-        Titanium.API.error(ex);
-        var alert = Titanium.UI.createAlertDialog();
-        alert.setMessage('There was a problem retrieving this list of wants.  Please try again later.');
-        alert.show();      
+        alert('There was a problem retrieving this list of wants.  Please try again later.');
     },
     
     httpError: function(status) {
         alert(status + ": request failed");
     }
-};
+}
