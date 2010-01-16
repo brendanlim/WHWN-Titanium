@@ -39,20 +39,28 @@ Item = function(fields, format) {
     
     
     this.create = function() {
-        return this.post("/post");
+        return this.post("/post", this.fields);
     };
     
-    this.url = function(path) {
-        return this.endpoint + path + "." + this.format + "?" + $.param(this.fields, true);
+    this.fetchOne = function(id) {
+        
+    }
+    
+    this.fetchType = function(type, category) {
+    
+    }
+    
+    this.url = function(path, args) {
+        return this.endpoint + path + "." + this.format + "?" + $.param(args, true);
     };
     
-    this.get = function(path) {
-        response = this.request('GET', this.url(path), format);
+    this.get = function(path, args) {
+        response = this.request('GET', this.url(path, args), format);
         return(response);
     };
 
-    this.post = function(path) {
-        return this.request('POST', this.url(path), format);
+    this.post = function(path, args) {
+        return this.request('POST', this.url(path, args), format);
     };
 
     this.request = function(method, url) {
