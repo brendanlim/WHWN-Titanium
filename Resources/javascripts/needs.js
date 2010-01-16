@@ -6,11 +6,12 @@ var template = {
    {type:'text', fontSize:22, fontWeight:'bold', left:10, top:10, width:290, height:40, color:'#222', name:'title'}
 ]};
 
-function buildData(post, index) {
-	data.push({title:item.title});
-}
-
-function displayNeeds(categories) {
+function displayNeeds(needs) {
+    for (i in needs) {
+        try {
+            data.push({'title':needs[i].content});
+        } catch(e) {}
+    }
     var win;
     tableView = Titanium.UI.createTableView({
         template:template, 

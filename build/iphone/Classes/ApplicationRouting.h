@@ -16,14 +16,13 @@
 }
 - (NSData*) resolveAppAsset:(NSURL*)url;
 - (NSData*) pageNamedCategory_feed;
+- (NSData*) pageNamedNeeds;
 - (NSData*) pageNamedSettings;
-- (NSData*) pageNamedTest_api;
-- (NSData*) pageNamedWants;
 - (NSData*) scriptNamedJavascripts_api;
 - (NSData*) scriptNamedJavascripts_category_feed;
 - (NSData*) scriptNamedJavascripts_jquery_1_4;
+- (NSData*) scriptNamedJavascripts_needs;
 - (NSData*) scriptNamedJavascripts_settings;
-- (NSData*) scriptNamedJavascripts_wants;
 - (NSData*) styleNamedStylesheets_index;
 
 @end
