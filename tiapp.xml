@@ -17,6 +17,15 @@
 		<fullscreen>false</fullscreen>
   </window>
   <window>
+    <id>haves</id>
+    <url>haves.html</url>
+    <title>Haves</title>
+    <backgroundColor>#fff</backgroundColor>
+	<icon>images/icon_want.png</icon>
+    <barColor>#4b5d74</barColor>
+	<fullscreen>false</fullscreen>
+  </window>
+  <window>
     <id>settings</id>
     <url>settings.html</url>
     <title>Settings</title>
