@@ -39,7 +39,7 @@ Item = function(fields, format) {
     
     
     this.create = function() {
-        return this.post("/post", this.fields);
+        return this.post("/post", this.fields, ItemDisplay.showList);
     };
     
     this.fetchOne = function(id) {
@@ -54,52 +54,15 @@ Item = function(fields, format) {
         return this.endpoint + path + "." + this.format + "?" + $.param(args, true);
     };
     
-    this.get = function(path, args) {
-        response = this.request('GET', this.url(path, args), format);
-        return(response);
+    this.get = function(path, args, displayCallback) {
+        ItemDisplay.request('GET', this.url(path, args), format, displayCallback);
     };
 
-    this.post = function(path, args) {
-        return this.request('POST', this.url(path, args), format);
+    this.post = function(path, args, displayCallback) {
+        ItemDisplay.request('POST', this.url(path, args), format, displayCallback);
     };
-    
-    this.showList(results) {
-        alert(results);
-    }
-    
-    this.displayError(ex) {
-        Titanium.API.error(ex);
-        var alert = Titanium.UI.createAlertDialog();
-        alert.setMessage('There was a problem retrieving this list of wants.  Please try again later.');
-        alert.show();      
-    }
-
-    this.request = function(method, url, callback) {
-        if (!method) method = "GET";
-        var xhr = Titanium.Network.createHTTPClient();
-        xhr.open(method, url);
-        
-        xhr.onreadystatechange = function() {
-        try {
-            if (this.readyState == 4) {   
-                if (this.status == 200) {
-                    try {
-                        var results = eval('('+this.responseText+')');
-                        callback(results);
-                    } catch(ex) {
-                        displayError(ex);
-                    }
-                } else {
-                    activityIndicator.hide();
-                }
-            }   
-        } catch(excep) {
-            activityIndicator.hide();
-        }
-        xhr.send(); 
-    };
-    
-//     this.request = function(method, url) {
-//         alert("Would be doing a " + method + " with url: " + url);
-//     };
 }
+
+// ItemDisplay.request = function(method, url) {
+//     alert("Would be doing a " + method + " with url: " + url);
+// };
