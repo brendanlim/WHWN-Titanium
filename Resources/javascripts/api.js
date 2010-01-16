@@ -39,30 +39,35 @@ Item = function(fields, format) {
     
     
     this.create = function() {
-        return this.post("/post", this.fields, ItemDisplay.showList);
+        return this.post("/post", this.fields, ItemDisplay.postCreated);
     };
     
-    this.fetchOne = function(id) {
+    this.fetchType = function(type) {
+        if (type != "haves" && type != "needs")
+            return null;
+        return this.get("/" + type, {}, ItemDisplay.showList);
+    };
+    
+    this.fetchCategory = function(category, type) {
+        var typePath = "";
+        if (type) typePath = "/" + type;
         
-    }
-    
-    this.fetchType = function(type, category) {
-    
-    }
+        return this.get("/" + category + typePath, {}, ItemDisplay.showList);
+    };
     
     this.url = function(path, args) {
         return this.endpoint + path + "." + this.format + "?" + $.param(args, true);
     };
     
     this.get = function(path, args, displayCallback) {
-        ItemDisplay.request('GET', this.url(path, args), format, displayCallback);
+        return ItemDisplay.request('GET', this.url(path, args), format, displayCallback);
     };
 
     this.post = function(path, args, displayCallback) {
-        ItemDisplay.request('POST', this.url(path, args), format, displayCallback);
+        return ItemDisplay.request('POST', this.url(path, args), format, displayCallback);
     };
 }
 
-// ItemDisplay.request = function(method, url) {
-//     alert("Would be doing a " + method + " with url: " + url);
-// };
+ItemDisplay.request = function(method, url) {
+    alert("Would be doing a " + method + " with url: " + url);
+};
