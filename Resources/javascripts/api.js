@@ -30,6 +30,7 @@
 */
 
 Item = function(fields, format) {
+    if (!fields) fields = {};
     if (!format) format = "json";
     
     this.endpoint = "http://localhost";
@@ -38,21 +39,29 @@ Item = function(fields, format) {
     
     
     this.create = function() {
-        return this.post("/post");
+        return this.post("/post", this.fields);
+    };
+    
+    this.fetchOne = function(id) {
+        
     }
     
-    this.url = function(path) {
-        return this.endpoint + path + "?test";
+    this.fetchType = function(type, category) {
+    
     }
     
-    this.get = function(path) {
-        response = this.request('GET', this.url(path), format);
+    this.url = function(path, args) {
+        return this.endpoint + path + "." + this.format + "?" + $.param(args, true);
+    };
+    
+    this.get = function(path, args) {
+        response = this.request('GET', this.url(path, args), format);
         return(response);
-    }
+    };
 
-    this.post = function(path) {
-        return this.request('POST', this.url(path), format);
-    }
+    this.post = function(path, args) {
+        return this.request('POST', this.url(path, args), format);
+    };
     
     this.showList(results) {
         alert(results);
@@ -67,7 +76,6 @@ Item = function(fields, format) {
 
     this.request = function(method, url, callback) {
         if (!method) method = "GET";
-        alert("Would be doing a " + method + " with url: " + url);
         var xhr = Titanium.Network.createHTTPClient();
         xhr.open(method, url);
         
@@ -90,4 +98,8 @@ Item = function(fields, format) {
         }
         xhr.send(); 
     };
+    
+//     this.request = function(method, url) {
+//         alert("Would be doing a " + method + " with url: " + url);
+//     };
 }
