@@ -1,6 +1,6 @@
 window.onload = function() {
     
-    var ENDPOINT_DOMAIN = 'wehaveweneed.org';
+    var ENDPOINT_DOMAIN = 'eleventy6.com:8000';
     
 	var height = (Titanium.Platform.name.indexOf('iPhone') != -1) ? 30: 40;
 	var usernameField = Titanium.UI.createTextField({
