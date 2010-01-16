@@ -1,20 +1,3 @@
-// name
-// content
-// location
-// coords
-// request,offer
-// contact info
-// contact email
-// time available (offer)
-// time needed (request)
-// categories
-// rss & json
-// anybody can post
-// email is optional
-// no need to login to make a post or anything
-// benefits to logging in to see all the posts that youve done before
-// supporting flagging
-
 var xhr = Titanium.Network.createHTTPClient();
 var tableView;
 var data = [];
@@ -28,8 +11,12 @@ function buildData(post, index) {
 	data.push({title:item.title});
 }
 
-function retrieveResults() {
-  data.push({title: 'We need medical supplies', hasChild:true});
+function retrieveCategories() {
+  data.push({title: 'Construction', hasChild:true});
+  data.push({title: 'Food', hasChild:true});
+  data.push({title: 'Medical', hasChild:true});
+  data.push({title: 'Recovery', hasChild:true});
+  data.push({title: 'Transportation', hasChild:true});
   // Titanium.API.info(requestUrl);
   //   xhr.open('GET',requestUrl);
   //   xhr.onreadystatechange = function() {
@@ -47,8 +34,8 @@ function retrieveResults() {
 								template:template, 
 								data:data
 								}, function(eventObject) {
-                  // win = Titanium.UI.createWindow({url:'/detail.html'});
-                  // win.open({animated:true});
+                  win = Titanium.UI.createWindow({url:'/category_feed.html', title:eventObject.rowData.title});
+                  win.open({animated:true});
 								});
 							Titanium.UI.currentWindow.addView(tableView);
 							Titanium.UI.currentWindow.showView(tableView);
@@ -83,5 +70,5 @@ window.onload = function(){
 		activityIndicator = Titanium.UI.createActivityIndicator({id:'loading', style:Titanium.UI.iPhone.ActivityIndicatorStyle.BIG});
 	}
 	activityIndicator.show();
-	retrieveResults();
+	retrieveCategories();
 };
