@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><ti:app xmlns:ti="http://ti.appcelerator.org">
+<id>com.brendanlim.wehaveweneed</id>
+<name>WeHaveWeNeed</name>
+<version>1.0</version>
+<icon>default_app_logo.png</icon>
+<persistent-wifi>false</persistent-wifi>
+<prerendered-icon>false</prerendered-icon>
+<statusbar-style>opaque</statusbar-style>
+<windows>
+  <window>
+    <id>initial</id>
+    <url>index.html</url>
+    <title>Home</title>
+    <backgroundColor>#fff</backgroundColor>
+	  <icon>images/icon_home.png</icon>
+    <barColor>#4b5d74</barColor>
+		<fullscreen>false</fullscreen>
+  </window>
+  <window>
+    <id>settings</id>
+    <url>settings.html</url>
+    <title>Settings</title>
+    <backgroundColor>#fff</backgroundColor>
+    <backgroundImage>images/stripes.png</backgroundImage>
+	  <icon>images/icon_settings.png</icon>
+    <barColor>#4b5d74</barColor>
+	  <fullscreen>false</fullscreen>
+  </window>
+</windows>
+<guid>8facef12-8f0d-4a27-8133-74d9a7585682</guid>
+</ti:app>
