@@ -57,7 +57,44 @@ Item = function(fields, format) {
     this.request = function(method, url) {
         if (!method) method = "GET";
         alert("Would be doing a " + method + " with url: " + url);
-//         var xhr = Titanium.Network.createHTTPClient();
-//         xhr.open(method, url);
+        var xhr = Titanium.Network.createHTTPClient();
+        xhr.open(method, url);
+        xhr.onreadystatechange = function() {
+        try {
+            if (this.readyState == 4) {   
+                if (this.status == 200) {
+                    try {
+                        var results = eval('('+this.responseText+')');
+                        for(var index in results) {
+                            buildData(results[index], index);
+                        }
+                        if(tableView == null) {
+                            var win;
+                            tableView = Titanium.UI.createTableView({
+                                template:template, 
+                                data:data
+                            }, function(eventObject) {
+                                win = Titanium.UI.createWindow({url:'/category_feed.html', title:eventObject.rowData.title});
+                                win.open({animated:true});
+      						});
+						Titanium.UI.currentWindow.addView(tableView);
+						Titanium.UI.currentWindow.showView(tableView);
+                        }           
+                        activityIndicator.hide();
+                        Titanium.UI.currentWindow.repaint();
+                    } catch(ex) {
+                        Titanium.API.error(ex);
+                        var alert = Titanium.UI.createAlertDialog();
+                        alert.setMessage('There was a problem retrieving this list of wants.  Please try again later.');
+                        alert.show();
+                    }
+                } else {
+                    activityIndicator.hide();
+                }
+            }   
+        } catch(excep) {
+            activityIndicator.hide();
+        }
+    };
+    xhr.send();
     }
-}
