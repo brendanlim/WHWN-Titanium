@@ -37,12 +37,6 @@
     
 */
 
-/*** Debug helpers for testing in-browser ***/
-// ENDPOINT_DOMAIN = "http://eleventy6.com:8000"
-// ItemDisplay.request = function(method, url) {
-//     alert("Would be doing a " + method + " to url: " + url);
-// };
-
 Item = {
     format: "json",
     
