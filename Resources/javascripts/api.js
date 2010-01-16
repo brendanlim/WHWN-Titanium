@@ -68,16 +68,24 @@ Item = {
     url: function(path, args) {
         var queryString = $.param(args, true);
         if (queryString) queryString = "?" + queryString;
-        
         return ENDPOINT_DOMAIN + path + "." + this.format + queryString;
     },
 
     get: function(path, args, callback) {
-        return this.request('GET', this.url(path, args), this.format, callback);
+        return this.request('GET', this.url(path, args), callback);
     },
 
     post: function(path, args, callback) {
-        return this.request('POST', this.url(path, args), this.format, callback);
+        return this.request('POST', this.url(path, args), callback);
+    },
+    
+    displayError: function(ex) {
+        alert("There was a problem retrieving this list of wants.  Please try again later.");
+        alert("Exception: " + ex);
+    },
+    
+    httpError: function(status) {
+        alert(status + ": request failed");
     },
     
     request: function(method, url, callback) {
@@ -97,22 +105,13 @@ Item = {
                         }
                     } else {
                         this.httpError(this.status);
-                        
                         activityIndicator.hide();
                     }
                 }   
             } catch(excep) {
                 activityIndicator.hide();
             }
-            xhr.send(); 
         }
-    },
-    
-    displayError: function(ex) {
-        alert('There was a problem retrieving this list of wants.  Please try again later.');
-    },
-    
-    httpError: function(status) {
-        alert(status + ": request failed");
+        xhr.send(); 
     }
 }
