@@ -7,7 +7,6 @@ var template = {
 ]};
 
 function displayPosts(posts) {
-    alert("dp");
     for (i in posts) {
         try {
             data.push({'title':posts[i].title});
