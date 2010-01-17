@@ -18,7 +18,7 @@ function displayPosts(posts) {
         template:template, 
         data:data
         }, function(eventObject) {
-            win = Titanium.UI.createWindow({url:'/post.html', title:eventObject.rowData.title});
+            win = Titanium.UI.createWindow({url:'/post_view.html', title:eventObject.rowData.title});
             win.open({animated:true});
         });
     Titanium.UI.currentWindow.addView(tableView);
