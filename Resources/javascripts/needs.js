@@ -9,7 +9,7 @@ var template = {
 function displayNeeds(needs) {
     for (i in needs) {
         try {
-            data.push({'title':needs[i].content});
+            data.push({'title':needs[i].title});
         } catch(e) {}
     }
     var win;
